@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ayateutic - Bisnis Anak Muda</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#60a5fa',
+                        'accent': '#bfdbfe',
+                        'background': '#eff6ff',
+                    },
+                    keyframes: {
+                        pulseShadow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(96, 165, 250, 0.7)' },
+                            '50%': { boxShadow: '0 0 0 12px rgba(96, 165, 250, 0)' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeInOut: {
+                            '0%, 100%': { opacity: '0' },
+                            '10%, 90%': { opacity: '1' },
+                        },
+                        baraGlow: {
+                            '0%': { textShadow: '0 0 3px #1e3a8a, 0 0 6px #2563eb, 0 0 10px #3b82f6' },
+                            '100%': { textShadow: '0 0 6px #2563eb, 0 0 12px #3b82f6, 0 0 18px #60a5fa' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '20%, 60%': { transform: 'translateX(-5px)' },
+                            '40%, 80%': { transform: 'translateX(5px)' },
+                        }
+                    },
+                    animation: {
+                        pulseShadow: 'pulseShadow 2s infinite',
+                        slideIn: 'slideIn 0.8s ease-out',
+                        fadeInOut: 'fadeInOut 3.5s ease-in-out infinite',
+                        baraGlow: 'baraGlow 0.8s infinite alternate',
+                        shake: 'shake 0.5s ease-in-out',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #eff6ff 0%, #bfdbfe 100%);
+            color: #333;
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .section-title {
+            border-bottom: 3px solid #60a5fa;
+            padding-bottom: 8px;
+            display: inline-block;
+            animation: slideIn 1s ease-out;
+            font-size: 1rem;
+            margin: 30px 0 20px;
+            color: #000000;
+        }
+
+        .testimonial-slider {
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slides-wrapper {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .slide-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        .floating-chat {
+            position: fixed;
+            bottom: 80px;
+            left: 10px;
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px 14px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-size: 0.8rem;
+            display: none;
+            z-index: 9999;
+            max-width: 200px;
+            animation: fadeInOut 5s ease-in-out;
+        }
+
+        .slot-terbatas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, #ef4444, #b91c1c);
+
+            color: white;
+            padding: 10px 40px;
+            font-weight: bold;
+            font-size: 14px;
+            transform: rotate(-45deg) translate(-30px, -30px);
+            transform-origin: top left;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid white;
+            z-index: 100;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+        }
+
+        .bara-glow {
+            animation: baraGlow 0.8s infinite alternate;
+            font-weight: 800;
+            font-size: 2.25rem;
+            color: #1e3a8a;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 3000px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <div id="chat1" class="floating-chat hidden md:block">💬 “Awalnya ragu, ternyata dibimbing dari nol sampai bisa!
+        -Dinda”</div>
+    <div id="chat2" class="floating-chat hidden md:block">💬 “Dapet bahan promosi lengkap tinggal upload doang!” -Rani
+    </div>
+    <div id="chat3" class="floating-chat hidden md:block">💬 “Cuma modal HP dan kuota udah bisa bisnis online!” -Adit
+    </div>
+    <div id="chat4" class="floating-chat hidden md:block">💬 “Modal kecil, hasil gede. Seriusan ini peluang bagus
+        banget!” -Intan</div>
+    <div id="chat5" class="floating-chat hidden md:block">💬 “Dikasih caption, gambar, video. Tinggal upload aja!”
+        -Surya</div>
+
+    <header class="bg-primary text-white p-6 shadow-xl relative overflow-hidden rounded-b-xl">
+        <div class="flex flex-col items-center pt-8 pb-4">
+            <img src="logo.jpg" alt="Logo ayateutic"
+                class="w-28 h-28 rounded-full border-4 border-accent animate-bounce object-cover" />
+
+            <h1 class="text-3xl sm:text-4xl font-extrabold mt-4 mb-2 tracking-wide animate-slideIn text-center">
+                WELCOME TO <br><span class="text-accent">@ayateutic</span>
+            </h1>
+
+            <div class="text-center mt-4 p-3 bg-white text-primary rounded-lg shadow-inner border-2 border-secondary">
+                <h2 class="text-lg font-semibold mb-1">Total Member Aktif:</h2>
+                <div id="counter" class="text-4xl font-bold text-secondary">0</div>
+            </div>
+        </div>
+    </header>
+
+    <p style="text-align: center; font-family: 'Poppins', sans-serif; margin-top: 24px; font-size: 16px; color: #333;">
+        Sebelum join, silakan cek juga story dan sorotan di akun
+        <a href="https://www.instagram.com/ayateutic_?igsh=MTFpNXRqYjh0czkzMw==" target="_blank"
+            style="display: inline-block; padding: 6px 14px; margin-left: 8px; background: linear-gradient(135deg, #60a5fa, #3b82f6, #1e3a8a); color: #fff; font-weight: 500; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+            BISNIS ANAK MUDA
+        </a>
+    </p>
+
+    <main class="container mx-auto p-4 space-y-12">
+
+        <section>
+            <h2
+                class="text-center bg-white p-6 rounded-xl shadow-lg border-t-4 border-secondary transform hover:scale-[1.01] transition duration-300 animate-slideIn text-primary font-bold text-lg">
+                SUKSES USIA MUDA🏆 KERJA LEWAT HP BISA HASILKAN 500-2JUTA/HARI</h2>
+            <div
+                class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-accent text-center transform hover:scale-105 transition duration-300 mt-4">
+                <div class="card">
+                    <p>Halo perkenalkan saya Aya owner dari bisnis <strong> @ayateutic</strong> yg akan membimbing
+                        kalian caranya
+                        mendapatkan penghasilan 500-2jt/hari </p><br>
+                    <p>Silahkan simak penjelasan dibawah
+                        Untuk info lebih lengkap akan di jelaskan setelah FIX GABUNG 😇
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="text-center bg-white p-6 rounded-xl shadow-lg border-t-4 border-secondary transform hover:scale-[1.01] transition duration-300 animate-slideIn">
+            <h2 class="section-title text-3xl font-bold text-primary mb-4">
+                🔥 <span class="text-blue-600">PROMO</span> Join Hari Ini!
+            </h2>
+
+            <div class="text-2xl font-medium mb-2">
+                <span class="line-through text-gray-500">Rp350.000</span>
+            </div>
+            <div class="text-blue-700 mb-4">
+                <span class="bara-glow">Rp65.000</span>
+            </div>
+
+            <p class="text-xl font-semibold text-blue-600 mb-4 animate-pulse">
+                💥 Diskon spesial hanya tersisa untuk **10 Orang Pertama**!
+            </p>
+
+            <section>
+                <h2 class="section-title">🔥 Promo Spesial Berakhir Dalam:</h2>
+                <div id="countdown" style="font-size: 2rem; font-weight: bold; color: #1e40af; margin-top: 10px;"></div>
+                <p style="margin-top: 10px; color: #555;">Jangan sampai kelewatan! Harga akan kembali normal ke
+                    <del>Rp350.000</del>
+                </p>
+            </section>
+
+            <a href="https://wa.link/sjf7df"
+                class="inline-block mt-6 px-8 py-4 bg-secondary text-white font-extrabold text-xl rounded-full shadow-2xl hover:bg-blue-600 transition duration-300 animate-pulseShadow">
+                ✅ SAYA MAU JOIN SEKARANG!
+            </a>
+        </section>
+
+        <section class="animate-slideIn">
+            <h2 class="section-title text-2xl font-bold text-primary mb-8">Mengapa ayateutic Pilihan Tepat?</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-wallet text-4xl text-secondary mb-3 animate-shake"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Potensi Jutaan</h3>
+                    <p class="text-gray-600">Potensi Penghasilan 300rb - 2jt/hari. Modal kembali berlipat ganda.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-graduation-cap text-4xl text-secondary mb-3"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Bimbingan Seumur Hidup</h3>
+                    <p class="text-gray-600">Full bimbingan pusat dan private, diajarkan strategi marketing dari nol
+                        sampai sukses.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-home text-4xl text-secondary mb-3"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Kerja Fleksibel</h3>
+                    <p class="text-gray-600">Kerja lewat HP, dimanapun dan kapanpun. Tanpa harus keluar rumah.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-star text-4xl text-secondary mb-3"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Tanpa Syarat Sulit</h3>
+                    <p class="text-gray-600">Tanpa nunjukin muka, tanpa minimum Followers, tanpa KTP/ATM, dan tanpa
+                        target.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-hand-holding-usd text-4xl text-secondary mb-3"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Keuntungan Penuh</h3>
+                    <p class="text-gray-600">Semua penghasilan 100% milik kamu sepenuhnya tanpa bagi hasil kepada
+                        siapapun.</p>
+                </div>
+
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-secondary text-center transform hover:scale-105 transition duration-300">
+                    <i class="fas fa-certificate text-4xl text-secondary mb-3"></i>
+                    <h3 class="text-xl font-bold text-primary mb-2">Halal & Legal</h3>
+                    <p class="text-gray-600">Bisnis anti Riba, bukan MLM/Money Game. Legalitas resmi tersedia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-slideIn">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary">
+                    <h3 class="text-2xl font-bold text-primary mb-4">PENGERTIAN BISNIS</h3>
+                    <p class="text-gray-700 mb-4">Bisnis ini adalah bisnis yang bergerak di bidang online. Cara kerjanya
+                        hanya mengandalkan handphone dan internet saja.</p>
+                    <p class="font-semibold text-primary">Cocok untuk pemula yang:</p>
+                    <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1">
+                        <li>Introvert</li>
+                        <li>Belum ada pengalaman</li>
+                        <li>Mager hanya dirumah aja</li>
+                        <li>Gaptek</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary">
+                    <h3 class="text-2xl font-bold text-primary mb-4">KEUNTUNGAN GABUNG</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Penghasilan 500rb - 3jt/hari.</li>
+                        <li>Diajarkan strategi marketing.</li>
+                        <li>Full bimbingan pusat dan private.</li>
+                        <li>Kerja hanya lewat HP tanpa keluar rumah.</li>
+                        <li>Kerja dimanapun dan kapanpun.</li>
+                        <li>Dibocorkan Tips and Trik agar bisnis kamu berkembang pesat.</li>
+                        <li class="font-bold text-secondary">1000% balik modal berlipat-lipat.</li>
+                        <li>Bisnis Halal dan terpercaya sejak 2020.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-slideIn">
+            <h2 class="section-title text-2xl font-bold text-primary mb-6">️️ 🎖️Kalo udah join kamu dapat 3 Bisnis
+                utama :
+            </h2>
+            <div class="space-y-4">
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Agen Bisnis <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p><strong>AGEN BISNIS</strong> adalah bisnis yang berjalan dibidang online yang di dalamnya
+                                terdapat kontak supplier tangan pertama mulai dari fashion, alat rumah tangga,
+                                kpop-stuf, otomotif, dll dengan harga yang sangat murah. Sehingga kamu bisa menjualnya
+                                kembali dengan keuntungan yang lebih besar.</p>
+                            <p>Jadi database itu isi nya semua fasilitas bisnis termasuk Tips trik sukses berbisnis dan
+                                semua link kontak supplier (toko) terlengkap langsung dari pabrik tersedia di sana ya
+                                kak inti nya semua yang di butuh untuk bisnis ada disana ya ka</p>
+                            <p class="font-semibold text-primary">Untuk detail akan djelaskn setelah join🙏</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Online Shop <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p><strong>ONLINE SHOP</strong> sendiri terbagi menjadi 2, yaitu dropshiper dan reseller.
+                            </p>
+                            <ul class="list-disc list-inside ml-2">
+                                <li><strong>Dropshiper</strong> adalah menjual barang milik supplier ke tangan konsumen
+                                    tanpa menyetok barang terlebih dahulu.</li>
+                                <li>sedangkan <strong>Reseller</strong> adalah menjual barang milik supplier ke tangan
+                                    konsumen dengan cara menyetok barang tersebut.</li>
+                            </ul>
+                            <p>Dan untuk suppliernya sendiri sudah disediakan di bisnis ini dan sangat lengkap tentunya.
+                            </p>
+
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                <p><strong>Contoh :</strong> harga baju di toko kontak supplier yang udah di sediakan
+                                    seharga 10rb, sedangkan di pasar dekat lingkungan mu dengan kualitas sama dan produk
+                                    yang sama dengan harga 80rb jadi kamu bisa jual dengan harga 50rb otomatis seluruh
+                                    pembeli dan pelanggan akan memilih untuk beli dengan mu🤑</p>
+                                <p class="mt-2 font-bold">Minsal dalam 1 hari kamu bisa jual 20pcs dengan keuntungan
+                                    30rb maka :<br>
+                                    30rb x 20 = 600rb<br>
+                                    600rb x 30hari = 18jt</p>
+                                <p class="mt-2 text-sm">Dan seterusnya begitu, ini hanya bisnis olshop belum databasse
+                                    dan kuota😭</p>
+                            </div>
+
+                            <p>💖Barang yang kita jual seperti sepatu,tas,baju,peralatan rumah tangga,Skincare,make
+                                up,alat motor,dll intinya lengkap ya kak dgn harga produk langsung dari pabrik dan di
+                                jamin paling murah serta udah di sediakan 100++ link kontak supplier(toko) nya🫶🙏</p>
+                            <p>Jangan takut kalo gak laku soal nya udah di sediain TIPS TRIK SUKSES nya mulai cara
+                                promosi,caption promosi,cara jual,cara jago jualan dll udah ada tinggal terima beres
+                                kerja via hp aja😁😍</p>
+                            <p class="font-semibold text-secondary">Setelah join nanti akan langsung masuk grup
+                                bimbingan dan mendapatkan full bimbingan sampai sukses ya kak🥰🫶</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Bisnis Agen Kuota & Pulsa <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p class="font-bold text-lg text-primary">AGEN KUOTA PULSA</p>
+                            <p>Pasti kalian semua udah ga asing lagi kan smaa yg namanya kuota ? Yah benar kuota
+                                internet yang sering kalian gunakan sehari" :) sangat penting sekali bukan ? Bahkan
+                                sudah jadi kebutuhan setiap orang</p>
+                            <p>So buat kalian yang pengen punya usaha jualan Kuota internet bisa bgt ,jgn takut ga laku
+                                krna setiap org butuh itu jadi ga mungkin ga laku😉</p>
+                            <p>Eitss bentarr belum selesai 😁</p>
+                            <p>Ga hanya kuota internet , kalian juga bisa jualan pulsa , token listrik , top up game ,
+                                top up shopepay dan msih bnyk lagi lengkap dalam satu aplikasi gimana ? Enak bgt kan
+                                🤤🤑</p>
+
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                <p>Oh yaa ,, kalian pasti masih beli pulsa dengan harga : 5rb = 7rb , 10rb=13rb dst...
+                                </p>
+                                <p class="mt-2 font-semibold">disini kalian bisa dapatkan langsung harga Asli nya dongg
+                                    pastinya lebih murah :</p>
+                                <ul class="font-bold text-primary ml-2 mt-1">
+                                    <li>5rb = 5.685</li>
+                                    <li>10rb = 10.375</li>
+                                    <li>20rb = 20.250</li>
+                                    <li>Dst ...</li>
+                                </ul>
+                                <p class="mt-2 font-bold text-secondary">Murah bgt bukan 😭🤤?</p>
+                            </div>
+
+                            <p>Jadi bisa untung bgt kalo kalian buat dijual lagi❤️peluang besar buat kalian nih jgn
+                                bnyak mikir" langsung action aja.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 pb-2">
+                    <h3 class="text-xl font-extrabold text-blue-700 flex items-center gap-2">
+                        <span class="text-2xl">🎖️</span> Bonus Bisnis Terkini :
+                    </h3>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Bisnis Agen Followers <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p>Disini km bisa jualan Followers all sosmed seperti Like/komen/folls di instagram/tiktok
+                                dll. <span class="font-bold text-secondary">keuntungan Full 100% ke km</span> & sudah
+                                termasuk pendaftaran gratis dari ayateutic🥰</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Affiliate Tiktok & Shopee <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p>Disini km akan diajarkan tips trik & step by step menjadi Affiliator krn saat ini bisnis
+                                affiliate sangat menguntungkan sampai bisa <span class="font-bold text-primary">get
+                                    2-3jt/hari dri komisi tiktok</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        App Premium <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p>disini km diajarkan gimana menjual produk digital(tanpa barang) seperti Spotify premium,
+                                youtube prem, netflix dll. <span class="font-bold text-secondary">keuntungan full 100%
+                                    ke km</span>. sehari bisa get 500-1jt krn bisnis ini life time✨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Creator Capcut <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p>disini km diajarkan cara menjadi creator capcut & punya <span
+                                    class="font-bold text-green-600">penghasilan Dollar!</span> bagi km yg suka ngedit”
+                                video atau minat walaupun masih pemula bisa bgt gabung & bercuan disini🤑</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-primary text-white font-bold text-lg hover:bg-blue-800 transition duration-300 flex justify-between items-center"
+                        onclick="toggleFaq(this)">
+                        Facebook Pro <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700 space-y-3">
+                            <p>disini km diajarkan cara menjadi konten kreator dengan <span
+                                    class="font-bold text-green-600">penghasilan Dollar💰</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="animate-slideIn">
+            <h2 class="section-title text-2xl font-bold text-primary mb-6">Testimoni Member Sukses</h2>
+            <div class="testimonial-slider bg-white p-4 rounded-xl shadow-xl border border-gray-100">
+                <div class="slides-wrapper" id="testimonial-slides">
+                    <div class="slide-item"><img src="testi1.jpg" alt="Testimoni 1"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                    <div class="slide-item"><img src="testi2.jpg" alt="Testimoni 2"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                    <div class="slide-item"><img src="testi3.jpg" alt="Testimoni 3"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                    <div class="slide-item"><img src="testi4.jpg" alt="Testimoni 4"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                    <div class="slide-item"><img src="testi5.jpg" alt="Testimoni 5"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                    <div class="slide-item"><img src="testi6.jpg" alt="Testimoni 6"
+                            class="w-full max-w-xs h-auto rounded-lg shadow-md" /></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-slideIn">
+            <h2 class="section-title text-2xl font-bold text-primary mb-6">❓ FAQ - Pertanyaan yang Sering Diajukan</h2>
+            <div class="space-y-3" id="faq-list">
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-blue-50 text-primary font-semibold flex justify-between items-center hover:bg-blue-100 transition duration-200"
+                        onclick="toggleFaq(this)">
+                        Apa bisnis ini aman dan legal?
+                        <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700">
+                            Ya, bisnis ini memiliki legalitas resmi. Sebagai bagian dari Pariston Grup, kami 100%
+                            amanah.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-blue-50 text-primary font-semibold flex justify-between items-center hover:bg-blue-100 transition duration-200"
+                        onclick="toggleFaq(this)">
+                        Berapa biaya untuk join? <span class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700">
+                            Harga normal **Rp350.000**, tapi saat ini sedang promo hanya **Rp65.000** saja! Biaya ini
+                            hanya **1x seumur hidup**.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-blue-50 text-primary font-semibold flex justify-between items-center hover:bg-blue-100 transition duration-200"
+                        onclick="toggleFaq(this)">
+                        Bagaimana jika saya pemula atau Gaptek? <span
+                            class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700">
+                            Jangan khawatir! Anda akan mendapatkan **full bimbingan** dan pendampingan, mulai dari class
+                            bimbingan hingga konsultasi private, sampai Anda benar-benar paham dan sukses.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-accent">
+                    <button
+                        class="faq-question w-full p-4 text-left bg-blue-50 text-primary font-semibold flex justify-between items-center hover:bg-blue-100 transition duration-200"
+                        onclick="toggleFaq(this)">
+                        Apa ada target dan harus bagi hasil? <span
+                            class="transform rotate-0 transition duration-300">▼</span>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-4 text-gray-700">
+                            Tidak ada target penjualan sama sekali. Anda bebas bekerja sesuai waktu luang Anda. Yang
+                            terbaik, **penghasilan 100% milik Anda!** Tidak ada bagi hasil dengan pihak ayateutic.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-slideIn mt-8">
+            <h2 class="section-title text-2xl font-bold text-primary mb-6">8. CARA JOIN ✅</h2>
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-secondary text-gray-800">
+                <p class="text-xl font-bold text-primary mb-3">Fix join PROMO 65.000</p>
+                <p class="mb-4 font-medium">Silahkan Transfer biaya pendaftaran ke salah satu no dibawah ini :</p>
+
+                <div
+                    class="bg-blue-50 p-5 rounded-lg border border-blue-200 mb-6 space-y-3 font-semibold text-primary shadow-sm">
+                    <p>✨ Dana / Chat di wa</p>
+                    <p>✨ Shopeepay / 081251563471 An Jeonk</p>
+                    <p>✨ Bank BCA / 8275588705 An DEVI</p>
+                    <p>✨ Bank BNI / 1045931815 An DEVI</p>
+                    <p>✨ Bank BRI / 453401017972506 An DEVI</p>
+                    <p>✨ QRIS/Pulsa: Bisa tanyakan chat wa</p>
+                </div>
+
+                <div class="space-y-2 mb-6">
+                    <p class="text-red-600 font-extrabold text-lg">ISI sebesar 65k (PROMO). <span
+                            class="text-gray-500 font-normal line-through ml-1">Normal 250k</span></p>
+                    <p>Jangan lupa kirim bukti Transfer nya, <strong class="text-red-600">No bukti no proses ‼️</strong>
+                    </p>
+                    <p>Cara pemakaian aplikasi dijelaskan setelah transfer, full bimbingan sampai bisa.</p>
+                </div>
+
+                <p class="text-sm bg-yellow-100 p-3 rounded-md text-yellow-800 font-bold mb-6 inline-block">NOTE: Fix
+                    join tf = setuju No refund</p>
+
+                <p class="text-lg font-bold text-blue-700 mb-2 uppercase">PROMO 65rb HANYA BERLAKU BUAT YG TRANSFER HARI
+                    INI :)</p>
+                <p class="font-bold text-gray-700">Ditunggu kabar baiknya ✨ Semoga bisa sukses bareng 🏆</p>
+            </div>
+        </section>
+
+        <section
+            class="relative bg-white text-center p-8 rounded-xl shadow-2xl border-t-4 border-primary overflow-hidden animate-slideIn mt-8">
+            <div class="slot-terbatas">Slot Terbatas!</div>
+
+            <h2 class="text-3xl font-extrabold text-primary mb-6 mt-6">🚀 Siap Gabung dan Mulai Bisnis Sekarang?</h2>
+
+            <p class="text-gray-800 font-bold mb-6 text-lg max-w-3xl mx-auto uppercase">
+                SESUDAH MEMBACA PENJELASAN BISNIS NYA, KAKAK SIAP JOIN BISNIS & MENYELESAIKAN BIAYA ADMINISTRASI HANYA
+                (1x seumur hidup)?
+            </p>
+
+            <div
+                class="text-left bg-blue-50 p-6 rounded-xl border border-blue-200 mb-8 inline-block w-full max-w-2xl mx-auto shadow-sm">
+                <p class="font-bold text-primary mb-4 text-lg">✅ Setelah pembayaran biaya pendaftaran/registrasi member
+                    baru, kakak akan langsung diarahkan ke:</p>
+                <ul class="space-y-3 text-gray-800 font-semibold ml-2">
+                    <li class="flex items-start gap-3"><span class="text-green-600 text-xl">✔️</span> Grup fasilitas
+                        bisnis lengkap</li>
+                    <li class="flex items-start gap-3"><span class="text-green-600 text-xl">✔️</span> Class bimbingan
+                        bisnis bersama pembisnis pemula lainnya</li>
+                    <li class="flex items-start gap-3"><span class="text-green-600 text-xl">✔️</span> Full bimbingan &
+                        pendampingan sampai paham</li>
+                </ul>
+            </div>
+
+            <p class="text-xl font-bold text-gray-800 mb-6 uppercase">JIKA BERMINAT, CHAT ADMIN SEKARANG DENGAN KETIK:
+            </p>
+
+            <a href="https://wa.link/sjf7df"
+                class="inline-block px-14 py-4 bg-secondary text-white font-extrabold text-2xl rounded-full shadow-xl hover:bg-blue-600 transition duration-300 animate-pulseShadow mb-4">
+                Fix Join!
+            </a>
+        </section>
+
+    </main>
+
+    <a href="https://wa.link/sjf7df"
+        class="fixed bottom-4 right-4 z-50 px-6 py-3 bg-secondary text-white font-extrabold rounded-full shadow-2xl flex items-center space-x-2 text-lg hover:bg-blue-600 transition duration-300 animate-pulseShadow">
+        <span>💬 Chat Admin & Join</span>
+    </a>
+
+    <footer class="bg-primary text-gray-300 text-center p-6 mt-12 rounded-t-2xl">
+        <p class="font-bold">&copy; ayateutic - Pariston Grup. All Rights Reserved.</p>
+        <p class="text-sm mt-1">Payment info & lainnya langsung hubungi admin ke WhatsApp</p>
+    </footer>
+
+    <script>
+        // 1. Member Counter Animation
+        let count = 0;
+        let target = 30250;
+        let speed = 2;
+        let counter = document.getElementById("counter");
+
+        function updateCounter() {
+            if (count < target) {
+                count += Math.floor(Math.random() * 300) + 1;
+                if (count > target) count = target;
+                counter.textContent = count.toLocaleString('id-ID');
+                setTimeout(updateCounter, speed);
+            }
+        }
+        updateCounter();
+
+        // 2. Confetti on Load
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            }, 1000);
+        });
+
+        // 3. Testimonial Slider
+        let currentIndex = 0;
+        const slides = document.getElementById('testimonial-slides');
+        const totalSlides = slides.children.length;
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }, 3500);
+
+        // 4. Floating Chat Rotation
+        const chats = [
+            document.getElementById("chat1"),
+            document.getElementById("chat2"),
+            document.getElementById("chat3"),
+            document.getElementById("chat4"),
+            document.getElementById("chat5")
+        ];
+        let currentChat = 0;
+
+        function showChat() {
+            chats.forEach((chat, index) => {
+                chat.style.display = index === currentChat ? "block" : "none";
+            });
+            currentChat = (currentChat + 1) % chats.length;
+        }
+
+        showChat();
+        setInterval(showChat, 3500);
+
+        // 5. FAQ Toggle
+        function toggleFaq(button) {
+            const parent = button.closest('.bg-white');
+            const answer = button.nextElementSibling;
+            const arrow = button.querySelector('span');
+
+            const isActive = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.style.maxHeight = '0px';
+                ans.previousElementSibling.querySelector('span').style.transform = 'rotate(0deg)';
+            });
+
+            if (!isActive) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // 6. Countdown Timer Logic
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 1);
+
+        const countdown = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                countdown.textContent = "Promo telah berakhir!";
+                countdown.style.color = "#999";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hrs = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+
+            countdown.textContent = `${days} hari ${hrs} jam ${mins} menit ${secs} detik`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+
+</html>
